@@ -80,8 +80,8 @@ class NoteSet(object):
 
 
 class NoteBuffer:
-    def __init__(self):
-        self.buffer = []
+    def __init__(self, b=[]):
+        self.buffer = b
     
     def add(self, note, velocity, time):
         self.buffer.append(NoteEvent(note, velocity, time))
@@ -93,9 +93,9 @@ class NoteBuffer:
         return self.buffer[:number]
     
     def get_last_nsec(self, time):
-        return filter(
+        return NoteBuffer(filter(
             lambda x: x.start_time > datetime.datetime.now() - datetime.timedelta(seconds=time),
-            self.buffer,)
+            self.buffer,))
     
     def get_last_note(self, note):
         try:
@@ -211,7 +211,7 @@ def complex_vector_calc(buffer):
     vector = active.note_vector
     for i in vector:
         if i is not 1:
-            window = buffer.get_last_nasec(window_length) - active
+            window = buffer.get_last_nsec(window_length) - active
             for i in window.note_set:
                 value = -1 * ((current_time - i.note_end)/(current_time - i.window_time))^power + 1
                 if value > vector[i.note % 12]:
@@ -227,8 +227,8 @@ def list(note, velocity):
     else:
         # ending a note
         current_buffer.close_last(note)
-    #current_mode = simple_vector_calc(current_buffer)
-    current_mode = complex_vector_calc(current_buffer)
+    current_mode = simple_vector_calc(current_buffer)
+    #current_mode = complex_vector_calc(current_buffer)
     closest_mode = current_mode.nearest(all_modes)
     return (
         closest_mode.color['r'],
