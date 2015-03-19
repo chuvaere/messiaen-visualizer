@@ -7,10 +7,13 @@ class NoteSet(object):
         self.note_set = numpy.array([0,0,0,0,0,0,0,0,0,0,0,0])
 
     def __init__(self, ar, cl = {'r':0, 'g':0, 'b':0}, name = ''):
-        self.note_set = ar
-        self.color = cl
-        self.name = name
-        self.vector = None
+        if len(ar) > 12:
+            raise Exception('Too many notes!')
+        else:
+            self.note_set = ar
+            self.color = cl
+            self.name = name
+            self.vector = None
 
     def __unicode__(self):
         return self.note_set
@@ -50,7 +53,7 @@ class NoteSet(object):
     @property
     def note_vector(self):
         if self.vector:
-            return self.vector
+            return numpy.array(self.vector)
         else:
             ar = numpy.array([0 for i in range(12)])
             for note in self.note_set:
@@ -58,13 +61,13 @@ class NoteSet(object):
             return ar
 
     def intersection(self, target):
-        return NoteSet(self.note_set & target.note_set)
+        return NoteSet(set(self.note_set) & set(target.note_set))
 
     def union(self, target):
-        return NoteSet(self.note_set | target.note_set)
+        return NoteSet(set(self.note_set) | set(target.note_set))
 
     def difference(self, target):
-        return NoteSet(self.note_set - target.note_set)
+        return NoteSet(set(self.note_set) - set(target.note_set))
 
     def distance(self, target):
         return numpy.linalg.norm(self.note_vector - target.note_vector)
@@ -86,16 +89,13 @@ class NoteBuffer:
     def add(self, note, velocity, time):
         self.buffer.append(NoteEvent(note, velocity, time))
     
-    def get_last(self):
-        return self.buffer[:]
-    
     def get_last_n(self, number):
         return self.buffer[:number]
     
     def get_last_nsec(self, time):
-        return NoteBuffer(filter(
+        return filter(
             lambda x: x.start_time > datetime.datetime.now() - datetime.timedelta(seconds=time),
-            self.buffer,))
+            self.buffer,)
     
     def get_last_note(self, note):
         try:
@@ -125,6 +125,13 @@ class NoteBuffer:
         for n in notes:
             n.end_time = datetime.datetime.now()
 
+    def get_heights(self):
+        counts = [{'chroma': i, 'height': 0} for i in range(12)]
+        for note in self.buffer:
+            if note.height > counts[chroma]['height']:
+                counts[chroma]['height'] = note.height
+        sorted(counts, key=lambda n:n['height'])
+        return [i['chroma'] for i in counts]
 
 class NoteEvent:
     def __init__(self, note, velocity, start_time):
@@ -132,6 +139,8 @@ class NoteEvent:
         self.velocity = velocity
         self.start_time = start_time
         self.end_time = None
+        self.chroma = note % 12
+        self.height = note / 12
     
     @property
     def duration(self):
@@ -140,7 +149,8 @@ class NoteEvent:
         else:
             return -1
 
-
+M0T0 = NoteSet({0,1,2,3,4,5,6,7,8,9,10,11}, {'r': 255, 'g': 255, 'b': 255}, name='M0T0') # all white
+M0T1 = NoteSet({}, {'r': 0, 'g': 0, 'b': 0}, name='M0T1') # no notes at all...black
 M1T1 = NoteSet({0,2,4,6,8,10}, {'r': 0, 'g': 0, 'b': 0}, name='M1T1')
 M1T2 = NoteSet({1,3,5,7,9,11}, {'r': 0, 'g': 0, 'b': 0}, name='M1T2')
 M2T1 = NoteSet({0,1,3,4,6,7,9,10}, {'r': 120, 'g': 0, 'b': 255}, name='M2T1')       # violet purple
@@ -176,6 +186,7 @@ M7T5 = NoteSet({4,5,6,7,9,10,11,0,1,3}, {'r': 0, 'g': 0, 'b': 0}, name='M7T5')
 M7T6 = NoteSet({5,6,7,8,10,11,0,1,2,4}, {'r': 0, 'g': 0, 'b': 0}, name='M7T6')
 
 all_modes = [
+    M0T0, M0T1,
     M1T1, M1T2,
     M2T1, M2T2, M2T3,
     M3T1, M3T2, M3T3, M3T4,
@@ -186,21 +197,26 @@ all_modes = [
 ]
 
 color_modes = [
+    M0T0, M0T1,
+    M2T1, M2T2, M2T3,
+    M3T1, M3T2, M3T3, M3T4,
+    M4T1, M4T2, M4T3, M4T4, M4T5, M4T6,
+    M6T1, M6T2, M6T3, M6T4,
 ]
 
 current_buffer = NoteBuffer()
 
 def simple_vector_calc(buffer):
     active_notes = buffer.get_active()
-    return NoteSet(set([i.note % 12 for i in active_notes]))
+    return NoteSet(set([i.chroma for i in active_notes]))
 
 def fixed_duration_calc(buffer):
     last_5_secs = buffer.get_last_nsec(5)
-    return NoteSet(set([i.note % 12 for i in last_5_secs]))
+    return NoteSet(set([i.chroma for i in last_5_secs]))
     
 def fixed_notes_calc(buffer):
     last_20_notes = buffer.get_last_n(20)
-    return NoteSet(set([i.note % 12 for i in last_5_secs]))
+    return NoteSet(set([i.chroma for i in last_5_secs]))
 
 def complex_vector_calc(buffer):
     power = 2
@@ -214,11 +230,21 @@ def complex_vector_calc(buffer):
             window = buffer.get_last_nsec(window_length) - active
             for i in window.note_set:
                 value = -1 * ((current_time - i.note_end)/(current_time - i.window_time))^power + 1
-                if value > vector[i.note % 12]:
-                    vector[i.note % 12] = value
+                if value > vector[i.chroma]:
+                    vector[i.chroma] = value
     buffer.vector = vector
     return buffer
+    
+def calculate_chroma_vector(buffer):
+    pass
 
+def calculate_envelope_length(buffer):
+    pass
+    
+def calculate_height_multiplier(buffer):
+    # create a vector multiplier based on height information
+    # height_multiplier = ((position - 5.5)^2 / 30) + 1
+    pass
 
 def list(note, velocity):
     if velocity:
@@ -228,7 +254,6 @@ def list(note, velocity):
         # ending a note
         current_buffer.close_last(note)
     current_mode = simple_vector_calc(current_buffer)
-    #current_mode = complex_vector_calc(current_buffer)
     closest_mode = current_mode.nearest(all_modes)
     return (
         closest_mode.color['r'],
@@ -239,3 +264,6 @@ def list(note, velocity):
 def bang():
     file = open('/Users/n91p817/sample_buffer.pickle', 'w+')
     pickle.dump(current_buffer, file)
+    
+def clear():
+    print "Clear!"
