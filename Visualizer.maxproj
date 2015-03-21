@@ -2,7 +2,7 @@
 	"name" : "Visualizer",
 	"version" : 1,
 	"creationdate" : -787588622,
-	"modificationdate" : -787587593,
+	"modificationdate" : -785253788,
 	"viewrect" : [ 25.0, 70.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -15,6 +15,14 @@
 				"local" : 1,
 				"toplevel" : 1
 			}
+
+		}
+,
+		"media" : 		{
+
+		}
+,
+		"externals" : 		{
 
 		}
 ,

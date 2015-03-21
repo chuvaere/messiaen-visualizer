@@ -151,6 +151,7 @@ class NoteEvent:
 
 M0T0 = NoteSet({0,1,2,3,4,5,6,7,8,9,10,11}, {'r': 255, 'g': 255, 'b': 255}, name='M0T0') # all white
 M0T1 = NoteSet({}, {'r': 0, 'g': 0, 'b': 0}, name='M0T1') # no notes at all...black
+M0T1.vector = numpy.array([-0.5 for i in range(12)])
 M1T1 = NoteSet({0,2,4,6,8,10}, {'r': 0, 'g': 0, 'b': 0}, name='M1T1')
 M1T2 = NoteSet({1,3,5,7,9,11}, {'r': 0, 'g': 0, 'b': 0}, name='M1T2')
 M2T1 = NoteSet({0,1,3,4,6,7,9,10}, {'r': 120, 'g': 0, 'b': 255}, name='M2T1')       # violet purple
@@ -262,8 +263,9 @@ def list(note, velocity):
         closest_mode.name)
         
 def bang():
-    file = open('/Users/n91p817/sample_buffer.pickle', 'w+')
-    pickle.dump(current_buffer, file)
+    pass
+    #file = open('/Users/n91p817/sample_buffer.pickle', 'w+')
+    #pickle.dump(current_buffer, file)
     
 def clear():
     print "Clear!"
