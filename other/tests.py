@@ -1,20 +1,15 @@
 import unittest
 import datetime
+import time
 
 import matcher
 import pickle
-
-class TestMaxMspFunctions(unittest.TestCase):
-    def test_bang(self):
-        self.assertIsNotNone(matcher.bang)
-    def test_clear(self):
-        self.assertIsNotNone(matcher.clear)
 
 class TestModeCharacteristics(unittest.TestCase):
     def test_all_modes(self):
         self.assertEqual(len(matcher.all_modes), 35)
     def test_color_modes(self):
-        self.assertEqual(len(matcher.color_modes), 19)
+        self.assertEqual(len(matcher.color_modes), 17)
 
 class TestSimpleVectorCalc(unittest.TestCase):
     def setUp(self):
@@ -22,12 +17,23 @@ class TestSimpleVectorCalc(unittest.TestCase):
         for i in range(12, 24):
             self.buffer.add(i, 40, datetime.datetime.now())
     def test_simple_vector(self):
-        self.assertEqual(len(self.buffer.buffer), 12)
-        self.assertEqual(len(self.buffer.get_active()), 12)
+        #self.assertEqual(len(self.buffer.buffer), 12)
+        #self.assertEqual(len(self.buffer.get_active()), 12)
         for i in matcher.simple_vector_calc(self.buffer).note_vector:
             self.assertTrue(i == 1)
 
-
+class TestComplexVectorCalc(unittest.TestCase):
+    def setUp(self):
+        self.buffer = matcher.NoteBuffer()
+        for i in range(0, 6):
+            self.buffer.add(i*2, 40, datetime.datetime.now())
+            time.sleep(0.5)
+            self.buffer.close_last(i*2)
+            time.sleep(0.5)
+    def test_complex_vector(self):
+        current_mode = matcher.complex_vector_calc(self.buffer)
+        closest_mode = current_mode.nearest(matcher.all_modes)
+        self.assertEqual(closest_mode, matcher.M1T1)
   
 class TestNoteSetOperations(unittest.TestCase):
     def setUp(self):

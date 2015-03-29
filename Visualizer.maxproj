@@ -2,7 +2,7 @@
 	"name" : "Visualizer",
 	"version" : 1,
 	"creationdate" : -787588622,
-	"modificationdate" : -785253788,
+	"modificationdate" : -784807863,
 	"viewrect" : [ 25.0, 70.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -14,6 +14,15 @@
 				"kind" : "patcher",
 				"local" : 1,
 				"toplevel" : 1
+			}
+,
+			"Pysets.maxpat" : 			{
+				"kind" : "patcher"
+			}
+,
+			"Compressor.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
 			}
 
 		}

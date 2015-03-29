@@ -1,17 +1,16 @@
 import numpy.linalg
 import datetime
-import pickle
 
 class NoteSet(object):
-    def __init__(self):
-        self.note_set = numpy.array([0,0,0,0,0,0,0,0,0,0,0,0])
-
-    def __init__(self, ar, cl = {'r':0, 'g':0, 'b':0}, name = ''):
+    def __init__(
+        self, ar=numpy.array([0,0,0,0,0,0,0,0,0,0,0,0]),
+        cl1={'r':0, 'g':0, 'b':0}, cl2={'r':0, 'g':0, 'b':0}, name = ''):
         if len(ar) > 12:
             raise Exception('Too many notes!')
         else:
             self.note_set = ar
-            self.color = cl
+            self.color1 = cl1
+            self.color2 = cl2
             self.name = name
             self.vector = None
 
@@ -52,7 +51,7 @@ class NoteSet(object):
 
     @property
     def note_vector(self):
-        if self.vector:
+        if self.vector is not None:
             return numpy.array(self.vector)
         else:
             ar = numpy.array([0 for i in range(12)])
@@ -80,7 +79,6 @@ class NoteSet(object):
                 smallest = i
                 dist = self.distance(i)
         return smallest
-
 
 class NoteBuffer:
     def __init__(self, b=[]):
@@ -124,6 +122,13 @@ class NoteBuffer:
             self.buffer,)
         for n in notes:
             n.end_time = datetime.datetime.now()
+            
+    def cleanup(self, time):
+        notes = filter(
+            lambda x: x.start_time < datetime.datetime.now() - datetime.timedelta(seconds=time),
+            self.buffer,)
+        for n in notes:
+            n.end_time = datetime.datetime.now()
 
     def get_heights(self):
         counts = [{'chroma': i, 'height': 0} for i in range(12)]
@@ -149,42 +154,120 @@ class NoteEvent:
         else:
             return -1
 
+    @property
+    def active(self):
+        return not self.end_time            
+
+    def __unicode__(self):
+        return "chroma: {0}, height: {1}, start: {2}, end: {3}".format(
+            self.chroma, self.height, self.start_time, self.end_time)
+            
+    def __str__(self):
+        return self.__unicode__()
+     
+def simple_vector_calc(buffer):
+    active_notes = buffer.get_active()
+    return NoteSet(set([i.chroma for i in active_notes]))
+
+def fixed_duration_calc(buffer):
+    last_5_secs = buffer.get_last_nsec(5)
+    return NoteSet(set([i.chroma for i in last_5_secs]))
+    
+def fixed_notes_calc(buffer):
+    last_20_notes = buffer.get_last_n(20)
+    return NoteSet(set([i.chroma for i in last_20_notes]))
+
+def complex_vector_calc(
+    buffer, wl=5.0, power=2.0):
+    current_time = datetime.datetime.now()
+    if wl < 0:
+        window_length = calculate_envelope_length(buffer)
+    else:
+        window_length = wl
+
+    window_time = current_time - datetime.timedelta(seconds = window_length)
+    ns = NoteSet()
+    vector = [0.0 for i in range(12)]
+    ns.vector = vector
+    print vector
+    for i in buffer.buffer:
+        if i.active:
+            value = 1.0
+        else:
+            value = -1.0 * (
+                float((current_time - i.start_time).seconds) /
+                float((current_time - window_time).seconds)) ** power + 1.0
+        if value > vector[i.chroma]:
+            vector[i.chroma] = value
+    print vector
+    ns.vector = vector
+    return ns
+
+def calculate_envelope_length(buffer):
+    #default_window_length = 5.0
+    #notes = buffer.get_last_nsec(20)
+    pass
+    
 M0T0 = NoteSet({0,1,2,3,4,5,6,7,8,9,10,11}, {'r': 255, 'g': 255, 'b': 255}, name='M0T0') # all white
+M0T0.vector = [1.5 for i in range(12)]
 M0T1 = NoteSet({}, {'r': 0, 'g': 0, 'b': 0}, name='M0T1') # no notes at all...black
-M0T1.vector = numpy.array([-0.5 for i in range(12)])
-M1T1 = NoteSet({0,2,4,6,8,10}, {'r': 0, 'g': 0, 'b': 0}, name='M1T1')
-M1T2 = NoteSet({1,3,5,7,9,11}, {'r': 0, 'g': 0, 'b': 0}, name='M1T2')
-M2T1 = NoteSet({0,1,3,4,6,7,9,10}, {'r': 120, 'g': 0, 'b': 255}, name='M2T1')       # violet purple
-M2T2 = NoteSet({1,2,4,5,7,8,10,11}, {'r': 147, 'g': 108, 'b': 0}, name='M2T2')      # gold/brown
-M2T3 = NoteSet({2,3,5,6,8,9,11,0}, {'r': 24, 'g': 126, 'b': 0}, name='M2T3')        # green
-M3T1 = NoteSet({0,2,3,4,6,7,8,10,11}, {'r': 256, 'g': 149, 'b': 0}, name='M3T1')    # orange
-M3T2 = NoteSet({1,3,4,5,7,8,9,11,0}, {'r': 145, 'g': 100, 'b': 145}, name='M3T2')   # grey/mauve
-M3T3 = NoteSet({2,4,5,6,8,9,10,0,1}, {'r': 0, 'g': 0, 'b': 0}, name='M3T3')# blue-orange
-M3T4 = NoteSet({3,5,6,7,9,10,11,1,2}, {'r': 0, 'g': 0, 'b': 0}, name='M3T4')# green-orange
-M4T1 = NoteSet({0,1,2,5,6,7,8,11}, {'r': 0, 'g': 0, 'b': 0}, name='M4T1')
-M4T2 = NoteSet({1,2,3,6,7,8,9,0}, {'r': 0, 'g': 0, 'b': 0}, name='M4T2')
-M4T3 = NoteSet({2,3,4,7,8,9,10,1}, {'r': 0, 'g': 0, 'b': 0}, name='M4T3')# yellow & violet
-M4T4 = NoteSet({3,4,5,8,9,10,11,2}, {'r': 0, 'g': 0, 'b': 0}, name='M4T4')# deep violet with white
-M4T5 = NoteSet({4,5,6,9,10,11,0,3}, {'r': 0, 'g': 0, 'b': 0}, name='M4T5')# deep violet
-M4T6 = NoteSet({5,6,7,10,11,0,1,4}, {'r': 215, 'g': 0, 'b': 64}, name='M4T6')# carmine red
-M5T1 = NoteSet({0,1,5,6,7,11}, {'r': 0, 'g': 0, 'b': 0}, name='M5T1')
-M5T2 = NoteSet({1,2,6,7,8,0}, {'r': 0, 'g': 0, 'b': 0}, name='M5T2')
-M5T3 = NoteSet({2,3,7,8,9,1}, {'r': 0, 'g': 0, 'b': 0}, name='M5T3')
-M5T4 = NoteSet({3,4,8,9,10,2}, {'r': 0, 'g': 0, 'b': 0}, name='M5T4')
-M5T5 = NoteSet({4,5,9,10,11,3}, {'r': 0, 'g': 0, 'b': 0}, name='M5T5')
-M5T6 = NoteSet({5,6,10,11,0,4}, {'r': 0, 'g': 0, 'b': 0}, name='M5T6')
-M6T1 = NoteSet({0,2,4,5,6,8,10,11}, {'r': 0, 'g': 0, 'b': 0}, name='M6T1')# golden
-M6T2 = NoteSet({1,3,5,6,7,9,11,0}, {'r': 0, 'g': 0, 'b': 0}, name='M6T2')# brown, russet
-M6T3 = NoteSet({2,4,6,7,8,10,0,1}, {'r': 0, 'g': 0, 'b': 0}, name='M6T3')# yellow
-M6T4 = NoteSet({3,5,7,8,9,11,1,2}, {'r': 0, 'g': 0, 'b': 0}, name='M6T4')# yellow violet black
-M6T5 = NoteSet({4,6,8,9,10,0,2,3}, {'r': 0, 'g': 0, 'b': 0}, name='M6T5')
-M6T6 = NoteSet({5,7,9,10,11,1,3,4}, {'r': 0, 'g': 0, 'b': 0}, name='M6T6')
-M7T1 = NoteSet({0,1,2,3,5,6,7,8,9,11}, {'r': 0, 'g': 0, 'b': 0}, name='M7T1')
-M7T2 = NoteSet({1,2,3,4,6,7,8,9,10,0}, {'r': 0, 'g': 0, 'b': 0}, name='M7T2')
-M7T3 = NoteSet({2,3,4,5,7,8,9,10,11,1}, {'r': 0, 'g': 0, 'b': 0}, name='M7T3')
-M7T4 = NoteSet({3,4,5,6,8,9,10,11,0,2}, {'r': 0, 'g': 0, 'b': 0}, name='M7T4')
-M7T5 = NoteSet({4,5,6,7,9,10,11,0,1,3}, {'r': 0, 'g': 0, 'b': 0}, name='M7T5')
-M7T6 = NoteSet({5,6,7,8,10,11,0,1,2,4}, {'r': 0, 'g': 0, 'b': 0}, name='M7T6')
+M0T1.vector = [-0.5 for i in range(12)]
+M1T1 = NoteSet({0,2,4,6,8,10}, name='M1T1')
+M1T2 = NoteSet({1,3,5,7,9,11}, name='M1T2')
+M2T1 = NoteSet({0,1,3,4,6,7,9,10},
+    {'r': 120, 'g': 0, 'b': 255}, {'r': 120, 'g': 0, 'b': 255},
+    name='M2T1')       # violet purple
+M2T2 = NoteSet({1,2,4,5,7,8,10,11},
+    {'r': 147, 'g': 108, 'b': 0},
+    name='M2T2')      # gold/brown
+M2T3 = NoteSet({2,3,5,6,8,9,11,0},
+    {'r': 24, 'g': 126, 'b': 0},
+    name='M2T3')        # green
+M3T1 = NoteSet({0,2,3,4,6,7,8,10,11},
+    {'r': 256, 'g': 149, 'b': 0},
+    name='M3T1')    # orange
+M3T2 = NoteSet({1,3,4,5,7,8,9,11,0},
+    {'r': 145, 'g': 100, 'b': 145},
+    name='M3T2')   # grey/mauve
+M3T3 = NoteSet({2,4,5,6,8,9,10,0,1},
+    name='M3T3')# blue-orange
+M3T4 = NoteSet({3,5,6,7,9,10,11,1,2},
+    name='M3T4')# green-orange
+M4T1 = NoteSet({0,1,2,5,6,7,8,11},
+    name='M4T1')
+M4T2 = NoteSet({1,2,3,6,7,8,9,0},
+    name='M4T2')
+M4T3 = NoteSet({2,3,4,7,8,9,10,1},
+    name='M4T3')# yellow & violet
+M4T4 = NoteSet({3,4,5,8,9,10,11,2},
+    name='M4T4')# deep violet with white
+M4T5 = NoteSet({4,5,6,9,10,11,0,3},
+    name='M4T5')# deep violet
+M4T6 = NoteSet({5,6,7,10,11,0,1,4},
+    {'r': 215, 'g': 0, 'b': 64},
+    name='M4T6')# carmine red
+M5T1 = NoteSet({0,1,5,6,7,11}, name='M5T1')
+M5T2 = NoteSet({1,2,6,7,8,0}, name='M5T2')
+M5T3 = NoteSet({2,3,7,8,9,1}, name='M5T3')
+M5T4 = NoteSet({3,4,8,9,10,2}, name='M5T4')
+M5T5 = NoteSet({4,5,9,10,11,3}, name='M5T5')
+M5T6 = NoteSet({5,6,10,11,0,4}, name='M5T6')
+M6T1 = NoteSet({0,2,4,5,6,8,10,11},
+    name='M6T1')# golden
+M6T2 = NoteSet({1,3,5,6,7,9,11,0},
+    name='M6T2')# brown, russet
+M6T3 = NoteSet({2,4,6,7,8,10,0,1},
+    name='M6T3')# yellow
+M6T4 = NoteSet({3,5,7,8,9,11,1,2},
+    name='M6T4')# yellow violet black
+M6T5 = NoteSet({4,6,8,9,10,0,2,3}, name='M6T5')
+M6T6 = NoteSet({5,7,9,10,11,1,3,4}, name='M6T6')
+M7T1 = NoteSet({0,1,2,3,5,6,7,8,9,11}, name='M7T1')
+M7T2 = NoteSet({1,2,3,4,6,7,8,9,10,0}, name='M7T2')
+M7T3 = NoteSet({2,3,4,5,7,8,9,10,11,1}, name='M7T3')
+M7T4 = NoteSet({3,4,5,6,8,9,10,11,0,2}, name='M7T4')
+M7T5 = NoteSet({4,5,6,7,9,10,11,0,1,3}, name='M7T5')
+M7T6 = NoteSet({5,6,7,8,10,11,0,1,2,4}, name='M7T6')
 
 all_modes = [
     M0T0, M0T1,
@@ -196,7 +279,6 @@ all_modes = [
     M6T1, M6T2, M6T3, M6T4, M6T5, M6T6,
     M7T1, M7T2, M7T3, M7T4, M7T5, M7T6,
 ]
-
 color_modes = [
     M0T0, M0T1,
     M2T1, M2T2, M2T3,
@@ -204,68 +286,3 @@ color_modes = [
     M4T1, M4T2, M4T3, M4T4, M4T5, M4T6,
     M6T1, M6T2, M6T3, M6T4,
 ]
-
-current_buffer = NoteBuffer()
-
-def simple_vector_calc(buffer):
-    active_notes = buffer.get_active()
-    return NoteSet(set([i.chroma for i in active_notes]))
-
-def fixed_duration_calc(buffer):
-    last_5_secs = buffer.get_last_nsec(5)
-    return NoteSet(set([i.chroma for i in last_5_secs]))
-    
-def fixed_notes_calc(buffer):
-    last_20_notes = buffer.get_last_n(20)
-    return NoteSet(set([i.chroma for i in last_5_secs]))
-
-def complex_vector_calc(buffer):
-    power = 2
-    current_time = datetime.datetime.now()
-    window_length = 5
-    window_time = current_time - datetime.timedelta(seconds = window_length)
-    active = simple_vector_calc(buffer)
-    vector = active.note_vector
-    for i in vector:
-        if i is not 1:
-            window = buffer.get_last_nsec(window_length) - active
-            for i in window.note_set:
-                value = -1 * ((current_time - i.note_end)/(current_time - i.window_time))^power + 1
-                if value > vector[i.chroma]:
-                    vector[i.chroma] = value
-    buffer.vector = vector
-    return buffer
-    
-def calculate_chroma_vector(buffer):
-    pass
-
-def calculate_envelope_length(buffer):
-    pass
-    
-def calculate_height_multiplier(buffer):
-    # create a vector multiplier based on height information
-    # height_multiplier = ((position - 5.5)^2 / 30) + 1
-    pass
-
-def list(note, velocity):
-    if velocity:
-        # seeing a new note
-        current_buffer.add(note, velocity, datetime.datetime.now())
-    else:
-        # ending a note
-        current_buffer.close_last(note)
-    current_mode = simple_vector_calc(current_buffer)
-    closest_mode = current_mode.nearest(all_modes)
-    return (
-        closest_mode.color['r'],
-        closest_mode.color['g'],
-        closest_mode.color['b'],
-        closest_mode.name)
-        
-def bang():
-    pass
-    #file = open('/Users/n91p817/sample_buffer.pickle', 'w+')
-    #pickle.dump(current_buffer, file)
-    
-def clear():
-    print "Clear!"
