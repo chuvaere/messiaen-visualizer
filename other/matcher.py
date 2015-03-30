@@ -79,6 +79,18 @@ class NoteSet(object):
                 smallest = i
                 dist = self.distance(i)
         return smallest
+        
+    def nearest_with_bias(self, sets, prev=None, bias=0.9):
+        if prev:
+            smallest = prev
+            dist = self.distance(prev) * bias
+            for i in sets:
+                if self.distance(i) < dist:
+                    smallest = i
+                    dist = self.distance(i)
+            return smallest
+        else:
+            return self.nearest(sets)
 
 class NoteBuffer:
     def __init__(self, b=[]):
@@ -189,17 +201,15 @@ def complex_vector_calc(
     ns = NoteSet()
     vector = [0.0 for i in range(12)]
     ns.vector = vector
-    print vector
     for i in buffer.buffer:
-        if i.active:
-            value = 1.0
-        else:
-            value = -1.0 * (
-                float((current_time - i.start_time).seconds) /
-                float((current_time - window_time).seconds)) ** power + 1.0
+        #if i.active:
+        #    value = 1.0
+        #else:
+        value = -1.0 * (
+            float((current_time - i.start_time).seconds) /
+            float((current_time - window_time).seconds)) ** power + 1.0
         if value > vector[i.chroma]:
             vector[i.chroma] = value
-    print vector
     ns.vector = vector
     return ns
 
