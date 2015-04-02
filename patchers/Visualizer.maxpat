@@ -3246,7 +3246,7 @@
 														"followglobaltempo" : 0,
 														"formantcorrection" : 0,
 														"mode" : "basic",
-														"originallength" : [ 155104.65625, "ticks" ],
+														"originallength" : [ 3339.319824, "ticks" ],
 														"originaltempo" : 120.0,
 														"pitchcorrection" : 0,
 														"quality" : "basic",
@@ -4338,10 +4338,10 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-23::obj-35" : [ "[5]", "Level", 0 ],
-			"obj-14" : [ "swatch", "swatch", 0 ],
+			"obj-42" : [ "swatch[1]", "swatch", 0 ],
 			"obj-23::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ],
-			"obj-42" : [ "swatch[1]", "swatch", 0 ]
+			"obj-23::obj-35" : [ "[5]", "Level", 0 ],
+			"obj-14" : [ "swatch", "swatch", 0 ]
 		}
 ,
 		"dependency_cache" : [ 			{
