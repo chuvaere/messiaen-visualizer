@@ -190,36 +190,24 @@ def fixed_notes_calc(buffer):
     return NoteSet(set([i.chroma for i in last_20_notes]))
 
 def complex_vector_calc(
-    buffer, wl=5.0, power=2.0):
+    buffer, halflife = 0.5):
     current_time = datetime.datetime.now()
-    if wl < 0:
-        window_length = calculate_envelope_length(buffer)
-    else:
-        window_length = wl
+    window_length = halflife * 10
 
     window_time = current_time - datetime.timedelta(seconds = window_length)
     ns = NoteSet()
     vector = [0.0 for i in range(12)]
     ns.vector = vector
     for i in buffer.buffer:
-        #if i.active:
-        #    value = 1.0
-        #else:
-        value = -1.0 * (
-            float((current_time - i.start_time).seconds) /
-            float((current_time - window_time).seconds)) ** power + 1.0
+        value = round(0.5 ** (
+            (float((current_time - i.start_time).seconds) / halflife)), 3)
         if value > vector[i.chroma]:
             vector[i.chroma] = value
     ns.vector = vector
     return ns
-
-def calculate_envelope_length(buffer):
-    #default_window_length = 5.0
-    #notes = buffer.get_last_nsec(20)
-    pass
     
 M0T0 = NoteSet({0,1,2,3,4,5,6,7,8,9,10,11}, {'r': 255, 'g': 255, 'b': 255}, name='M0T0') # all white
-M0T0.vector = [1.5 for i in range(12)]
+M0T0.vector = [1.25 for i in range(12)]
 M0T1 = NoteSet({}, {'r': 0, 'g': 0, 'b': 0}, name='M0T1') # no notes at all...black
 M0T1.vector = [-0.5 for i in range(12)]
 M1T1 = NoteSet({0,2,4,6,8,10}, name='M1T1')
