@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 378.0, 79.0, 783.0, 753.0 ],
+		"rect" : [ 60.0, 79.0, 1250.0, 678.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -37,6 +37,25 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-3",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "Fixture Controller.maxpat",
+					"numinlets" : 2,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 604.0, 26.540009, 640.0, 624.0 ],
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bgmode" : 0,
 					"border" : 0,
@@ -187,7 +206,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 232.5, 552.0, 82.0, 22.0 ],
+					"patching_rect" : [ 232.5, 552.0, 37.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 284.5, 553.0, 82.0, 22.0 ],
 					"style" : "",
@@ -203,7 +222,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 456.5, 354.959991, 43.0, 22.0 ],
+					"patching_rect" : [ 462.5, 354.959991, 43.0, 22.0 ],
 					"style" : "",
 					"text" : "set $1"
 				}
@@ -217,7 +236,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 6.0, 562.0, 82.0, 22.0 ],
+					"patching_rect" : [ 0.5, 552.0, 82.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 64.5, 553.0, 82.0, 22.0 ],
 					"style" : "",
@@ -266,7 +285,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 375.0, 76.0, 225.0, 95.0 ],
+						"rect" : [ 57.0, 76.0, 225.0, 95.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 1,
@@ -779,7 +798,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 380.0, 101.0, 175.0, 67.0 ],
+										"rect" : [ 62.0, 101.0, 175.0, 67.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -1650,7 +1669,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 380.0, 101.0, 179.0, 66.0 ],
+										"rect" : [ 62.0, 101.0, 179.0, 66.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -1901,7 +1920,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 380.0, 101.0, 178.0, 65.0 ],
+										"rect" : [ 62.0, 101.0, 178.0, 65.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -2664,7 +2683,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 380.0, 101.0, 179.0, 65.0 ],
+										"rect" : [ 62.0, 101.0, 179.0, 65.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -3683,7 +3702,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 456.5, 461.0, 122.0, 40.0 ],
+					"patching_rect" : [ 462.5, 462.0, 122.0, 40.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 44.5, 198.0, 122.0, 40.0 ],
 					"style" : "",
@@ -3780,9 +3799,7 @@
 					"destination" : [ "obj-20", 1 ],
 					"disabled" : 0,
 					"hidden" : 1,
-					"source" : [ "obj-24", 0 ],
-					"watchpoint_flags" : 1,
-					"watchpoint_id" : 1
+					"source" : [ "obj-24", 0 ]
 				}
 
 			}
@@ -3860,10 +3877,10 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-23::obj-35" : [ "[5]", "Level", 0 ],
-			"obj-25::obj-14" : [ "swatch[1]", "swatch", 0 ],
 			"obj-20::obj-14" : [ "swatch", "swatch", 0 ],
-			"obj-23::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ]
+			"obj-23::obj-35" : [ "[5]", "Level", 0 ],
+			"obj-23::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ],
+			"obj-25::obj-14" : [ "swatch[1]", "swatch", 0 ]
 		}
 ,
 		"dependency_cache" : [ 			{
@@ -3923,11 +3940,36 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "Fixture Controller.maxpat",
+				"bootpath" : "~/Documents/Visualizer/patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "Selecon PL1.maxpat",
+				"bootpath" : "~/Documents/Visualizer/patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "Elation Opti Quad Par.maxpat",
+				"bootpath" : "~/Documents/Visualizer/patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "transcribe~.mxo",
 				"type" : "iLaX"
 			}
 , 			{
 				"name" : "py.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "imp.artnet.controller.mxo",
 				"type" : "iLaX"
 			}
  ],
