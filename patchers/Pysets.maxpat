@@ -64,19 +64,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-19",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 357.0, 314.0, 60.0, 22.0 ],
-					"style" : "",
-					"text" : "loadbang"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"bubblesize" : 30,
 					"id" : "obj-18",
 					"maxclass" : "preset",
@@ -305,7 +292,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 10.25, 55.0, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "5."
+					"text" : "0.5"
 				}
 
 			}
