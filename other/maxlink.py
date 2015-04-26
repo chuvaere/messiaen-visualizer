@@ -35,11 +35,17 @@ class Decider(pyext._class):
         self._outlet(1,
             [closest_mode.color1['r'],
             closest_mode.color1['g'],
-            closest_mode.color1['b'],])
+            closest_mode.color1['b'],
+            closest_mode.color1['w'],
+            closest_mode.color1['i']]
+        )
         self._outlet(2,
             [closest_mode.color2['r'],
             closest_mode.color2['g'],
-            closest_mode.color2['b'],])
+            closest_mode.color2['b'],
+            closest_mode.color2['w'],
+            closest_mode.color2['i']]
+        )
         self._outlet(3,
             closest_mode.name)
         if self.inspect:
