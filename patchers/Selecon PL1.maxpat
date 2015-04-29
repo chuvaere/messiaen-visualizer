@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 649.0, 163.0, 569.0, 589.0 ],
+		"rect" : [ 735.0, 79.0, 622.0, 685.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,12 +38,38 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-14",
-					"maxclass" : "button",
+					"id" : "obj-48",
+					"linecount" : 2,
+					"maxclass" : "comment",
 					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 105.0, 137.0, 24.0, 24.0 ],
+					"numoutlets" : 0,
+					"patching_rect" : [ 74.75, 537.0, 195.0, 33.0 ],
+					"style" : "",
+					"text" : "Output 1: DMX commands for the imp.artnet.controller object"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-50",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 484.75, 537.0, 195.0, 33.0 ],
+					"style" : "",
+					"text" : "Output 2: Mirrors input 2 (for easy display monitoring)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"comment" : "",
+					"id" : "obj-15",
+					"maxclass" : "outlet",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 450.5, 537.0, 30.0, 30.0 ],
 					"style" : ""
 				}
 
@@ -51,25 +77,78 @@
 , 			{
 				"box" : 				{
 					"comment" : "",
-					"id" : "obj-9",
-					"maxclass" : "outlet",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 398.5, 537.0, 30.0, 30.0 ],
+					"id" : "obj-13",
+					"maxclass" : "inlet",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 450.5, 10.0, 30.0, 30.0 ],
 					"style" : ""
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"candicane2" : [ 0.0, 1.0, 0.0, 1.0 ],
+					"candicane3" : [ 0.0, 0.0, 1.0, 1.0 ],
+					"candicane4" : [ 1.0, 1.0, 1.0, 1.0 ],
+					"candicane5" : [ 0.8, 0.8, 0.8, 1.0 ],
+					"candycane" : 5,
 					"id" : "obj-12",
-					"maxclass" : "newobj",
-					"numinlets" : 5,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 398.5, 502.0, 138.0, 22.0 ],
+					"maxclass" : "multislider",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"orientation" : 0,
+					"outlettype" : [ "", "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 370.5, 85.0, 165.75, 119.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 0.25, 0.0, 40.75, 40.0 ],
+					"setminmax" : [ 0.0, 255.0 ],
+					"setstyle" : 1,
+					"settype" : 0,
+					"size" : 5,
+					"slidercolor" : [ 1.0, 0.0, 0.0, 1.0 ],
+					"spacing" : 3,
+					"style" : ""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-45",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 484.75, 10.0, 270.0, 47.0 ],
 					"style" : "",
-					"text" : "join 5"
+					"text" : "Input 2:  List of 5 integers (between 0 and 255).\nThe following order:\n{ red, green, blue, white, intensity }"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-30",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 74.75, 10.0, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "Input 1:  Starting channel for the fixture"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-14",
+					"maxclass" : "button",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 240.0, 140.0, 24.0, 24.0 ],
+					"style" : ""
 				}
 
 			}
@@ -83,7 +162,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 42.0, 180.5, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 0.0, 38.0, 22.0 ],
+					"presentation_rect" : [ 41.0, 0.0, 38.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -96,7 +175,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 86.0, 10.0, 30.0, 30.0 ],
+					"patching_rect" : [ 240.0, 10.0, 30.0, 30.0 ],
 					"style" : ""
 				}
 
@@ -171,33 +250,6 @@
 					"patching_rect" : [ 44.0, 385.0, 62.0, 20.0 ],
 					"style" : "",
 					"text" : "Intensity"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"candicane2" : [ 1.0, 0.0, 0.0, 1.0 ],
-					"candicane3" : [ 0.0, 1.0, 0.0, 1.0 ],
-					"candicane4" : [ 0.0, 0.0, 1.0, 1.0 ],
-					"candicane5" : [ 1.0, 1.0, 1.0, 1.0 ],
-					"candycane" : 5,
-					"id" : "obj-212",
-					"maxclass" : "multislider",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"orientation" : 0,
-					"outlettype" : [ "", "" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 152.75, 35.0, 158.0, 115.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 0.0, 0.0, 40.0, 40.0 ],
-					"setminmax" : [ 0.0, 255.0 ],
-					"setstyle" : 1,
-					"settype" : 0,
-					"size" : 5,
-					"slidercolor" : [ 0.8, 0.8, 0.8, 1.0 ],
-					"spacing" : 3,
-					"style" : ""
 				}
 
 			}
@@ -552,10 +604,37 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-9", 0 ],
+					"destination" : [ "obj-14", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-12", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-12", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-15", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-13", 0 ]
 				}
 
 			}
@@ -583,24 +662,6 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-20", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-212", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-4", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-212", 0 ]
 				}
 
 			}
@@ -642,28 +703,10 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-12", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-32", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-20", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-32", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-12", 1 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-33", 0 ]
 				}
 
 			}
@@ -696,15 +739,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-12", 2 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-36", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-38", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -732,15 +766,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-12", 3 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-39", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-41", 1 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -753,7 +778,7 @@
 					"destination" : [ "obj-32", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-4", 1 ]
+					"source" : [ "obj-4", 0 ]
 				}
 
 			}
@@ -762,7 +787,7 @@
 					"destination" : [ "obj-33", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-4", 2 ]
+					"source" : [ "obj-4", 1 ]
 				}
 
 			}
@@ -771,7 +796,7 @@
 					"destination" : [ "obj-36", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-4", 3 ]
+					"source" : [ "obj-4", 2 ]
 				}
 
 			}
@@ -780,7 +805,7 @@
 					"destination" : [ "obj-39", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-4", 4 ]
+					"source" : [ "obj-4", 3 ]
 				}
 
 			}
@@ -789,7 +814,7 @@
 					"destination" : [ "obj-42", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-4", 0 ]
+					"source" : [ "obj-4", 4 ]
 				}
 
 			}
@@ -814,15 +839,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-11", 1 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-42", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-12", 4 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-42", 0 ]
