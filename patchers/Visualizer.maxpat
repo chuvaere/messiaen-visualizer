@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 109.0, 79.0, 1255.0, 785.0 ],
+		"rect" : [ 341.0, 79.0, 1255.0, 785.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -1347,7 +1347,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 356.0, 6.540009, 187.0, 323.459991 ],
+					"patching_rect" : [ 356.0, 6.540009, 187.0, 318.459991 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 233.0, 5.0, 185.0, 321.0 ],
 					"viewvisibility" : 1
@@ -1423,7 +1423,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 111.0, 75.0, 225.0, 95.0 ],
+						"rect" : [ 347.0, 79.0, 225.0, 95.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 1,
@@ -1936,7 +1936,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 116.0, 100.0, 175.0, 67.0 ],
+										"rect" : [ 352.0, 104.0, 175.0, 67.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -2807,7 +2807,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 116.0, 100.0, 179.0, 66.0 ],
+										"rect" : [ 352.0, 104.0, 179.0, 66.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -3058,7 +3058,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 116.0, 100.0, 178.0, 65.0 ],
+										"rect" : [ 352.0, 104.0, 178.0, 65.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -3821,7 +3821,7 @@
 											"modernui" : 1
 										}
 ,
-										"rect" : [ 116.0, 100.0, 179.0, 65.0 ],
+										"rect" : [ 352.0, 104.0, 179.0, 65.0 ],
 										"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 1,
@@ -5123,10 +5123,10 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-20::obj-14" : [ "swatch", "swatch", 0 ],
 			"obj-25::obj-14" : [ "swatch[1]", "swatch", 0 ],
+			"obj-23::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ],
 			"obj-23::obj-35" : [ "[5]", "Level", 0 ],
-			"obj-23::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ]
+			"obj-20::obj-14" : [ "swatch", "swatch", 0 ]
 		}
 ,
 		"dependency_cache" : [ 			{

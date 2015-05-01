@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 456.0, 206.0, 691.0, 548.0 ],
+		"rect" : [ 120.0, 170.0, 781.0, 558.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,12 +38,83 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-25",
+					"maxclass" : "number",
+					"maximum" : 4,
+					"minimum" : 1,
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 524.0, 18.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 12.0, 131.0, 50.0, 22.0 ],
+					"style" : ""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 1,
+					"fontsize" : 20.0,
+					"id" : "obj-23",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 561.0, 122.5, 53.0, 31.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 12.0, 219.0, 153.0, 31.0 ],
+					"style" : "",
+					"text" : "read",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 1,
+					"fontsize" : 20.0,
+					"id" : "obj-20",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 495.0, 122.5, 57.0, 31.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 12.0, 188.0, 153.0, 31.0 ],
+					"style" : "",
+					"text" : "write",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 1,
+					"fontsize" : 20.0,
+					"id" : "obj-17",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 518.0, 67.0, 87.0, 31.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 12.0, 157.0, 153.0, 31.0 ],
+					"style" : "",
+					"text" : "store $1",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-22",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 541.0, 17.0, 60.0, 22.0 ],
+					"patching_rect" : [ 616.0, 93.0, 60.0, 22.0 ],
 					"style" : "",
 					"text" : "loadbang"
 				}
@@ -56,7 +127,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 541.0, 46.5, 85.0, 22.0 ],
+					"patching_rect" : [ 616.0, 122.5, 85.0, 22.0 ],
 					"style" : "",
 					"text" : "bubblesize 30"
 				}
@@ -70,9 +141,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "preset", "int", "preset", "int" ],
-					"patching_rect" : [ 526.0, 95.0, 143.0, 41.0 ],
+					"patching_rect" : [ 601.0, 171.0, 143.0, 41.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 137.5, 143.0, 41.0 ],
+					"presentation_rect" : [ 12.0, 85.0, 143.0, 41.0 ],
 					"style" : ""
 				}
 
@@ -99,7 +170,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 226.25, 94.5, 53.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 67.25, 59.0, 97.0, 24.0 ],
+					"presentation_rect" : [ 67.25, 37.0, 97.0, 24.0 ],
 					"style" : "",
 					"text" : "Bias"
 				}
@@ -120,7 +191,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 174.25, 95.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 59.0, 50.0, 22.0 ],
+					"presentation_rect" : [ 12.0, 37.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -173,7 +244,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 387.25, 87.5, 76.0, 37.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 67.25, 93.0, 97.0, 24.0 ],
+					"presentation_rect" : [ 67.25, 61.0, 97.0, 24.0 ],
 					"style" : "",
 					"text" : "Line Delay"
 				}
@@ -193,7 +264,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 331.0, 95.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 93.0, 50.0, 22.0 ],
+					"presentation_rect" : [ 12.0, 61.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -209,7 +280,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 414.0, 204.5, 81.0, 31.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 270.0, 153.0, 31.0 ],
+					"presentation_rect" : [ 12.0, 281.0, 153.0, 31.0 ],
 					"style" : "",
 					"text" : "inspect",
 					"textjustification" : 1
@@ -227,7 +298,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 342.0, 204.5, 59.0, 31.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 229.5, 152.25, 31.0 ],
+					"presentation_rect" : [ 12.0, 249.5, 152.25, 31.0 ],
 					"style" : "",
 					"text" : "clear",
 					"textjustification" : 1
@@ -244,7 +315,7 @@
 					"patching_rect" : [ 62.25, 94.5, 101.0, 24.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 67.25, 15.0, 97.0, 37.0 ],
+					"presentation_rect" : [ 67.25, 0.0, 97.0, 37.0 ],
 					"style" : "",
 					"text" : "Note Half Life"
 				}
@@ -265,7 +336,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 10.25, 95.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 12.0, 15.0, 50.0, 22.0 ],
+					"presentation_rect" : [ 12.0, 0.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -414,10 +485,28 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-18", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-17", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-2", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-18", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-20", 0 ]
 				}
 
 			}
@@ -436,6 +525,24 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-22", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-18", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-23", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-17", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-25", 0 ]
 				}
 
 			}

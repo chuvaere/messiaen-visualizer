@@ -1,0 +1,7 @@
+{
+	"preset_data" : [ 		{
+			"number" : 1,
+			"data" : [ 5, "obj-15", "flonum", "float", 1.0, 5, "obj-9", "number", "int", 2000, 5, "obj-7", "flonum", "float", 0.75, 5, "obj-25", "number", "int", 1 ]
+		}
+ ]
+}
